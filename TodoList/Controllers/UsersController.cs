@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -37,6 +38,15 @@ namespace TodoList.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity != null)
+            {
+                IEnumerable<Claim> claims = identity.Claims;
+                
+                //identity.FindFirst("Username").Value;
+
+            }
+
             var users = _userService.GetAll();
             return Ok(users);
         }
